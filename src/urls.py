@@ -1,7 +1,6 @@
-import pymongo
-from flask import Flask
+from flask import Flask, request
 
-from src.core.usecase.profile import Profile
+from src.controller.profile_controller import Profile
 
 app = Flask("posterr")
 
@@ -13,13 +12,14 @@ def hello_world():
 
 @app.route("/profile/<username>", methods=["GET"])
 def profile(username):
-    profile = Profile(username)
-    return f"<p>Hello, {profile.payload()}!</p>"
+    profile = Profile(username=username, page=request.args.get('page'))
+    return profile.profile_page()
 
 
 @app.route("/home", methods=["GET"])
-def home():
-    return "<p>Hello, World!</p>"
+def home(username):
+    profile = Profile(username=username, page=request.args.get('page'))
+    return profile.profile_page()
 
 
 @app.route("/post", methods=["GET", "POST"])

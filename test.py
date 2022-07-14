@@ -1,6 +1,6 @@
-import pytest
-from src.infra.database import database_config
+from src.controller.profile_controller import Profile
 
 
 def test():
-    database_config.setUp()
+    Profile(username="gabtest", page=2).profile_page()
+    print('ok')
