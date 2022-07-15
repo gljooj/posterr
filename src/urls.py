@@ -1,6 +1,8 @@
 from flask import Flask, request
 
-from src.controller.profile_controller import Profile
+from src.controller.home_controller import HomeController
+from src.controller.post_controller import PostController
+from src.controller.profile_controller import ProfileController
 
 app = Flask("posterr")
 
@@ -12,19 +14,20 @@ def hello_world():
 
 @app.route("/profile/<username>", methods=["GET"])
 def profile(username):
-    profile = Profile(username=username, page=request.args.get('page'))
+    profile = ProfileController(username=username, page=request.args.get('page', 1))
     return profile.profile_page()
 
 
-@app.route("/home", methods=["GET"])
+@app.route("/home/<username>", methods=["GET"])
 def home(username):
-    profile = Profile(username=username, page=request.args.get('page'))
-    return profile.profile_page()
+    profile = HomeController(username=username, page=request.args.get('page', 1))
+    return profile.home_page()
 
 
-@app.route("/post", methods=["GET", "POST"])
+@app.route("/post", methods=["POST"])
 def post():
-    return "<p>Hello, World!</p>"
+    controller = PostController()
+    return controller.new_post(request.json)
 
 
 @app.route("/comment", methods=["GET", "POST"])
