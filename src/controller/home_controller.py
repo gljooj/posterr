@@ -5,15 +5,15 @@ from src.core.repository.profile_repository import ProfileRepository
 
 
 class HomeController:
-    def __init__(self, username, page):
-        self.username = username
+    def __init__(self, user, page):
+        self.user = user
         self.page = int(page)
         self.profile_repository = ProfileRepository()
         self.post_repository = PostRepository()
 
     @property
     def __profile_data(self):
-        data = self.profile_repository.get_by_filter(username=self.username)
+        data = self.profile_repository.get_by_filter(username=self.user['username'])
         data['joined_at'] = str(datetime.strftime(data.get("joined_at"), "%b %d, %y"))
         return data
 

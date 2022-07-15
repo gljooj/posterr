@@ -5,7 +5,7 @@ from marshmallow import ValidationError
 from src.core.repository import PostValidate
 from src.core.repository.post_repository import PostRepository
 from src.core.repository.profile_repository import ProfileRepository
-from src.core.schemas.post import PostSchema
+from src.core.schemas.post_schema import PostSchema
 
 
 class PostController:
