@@ -14,6 +14,10 @@ class AbstractRepository(ABC, DataBaseConfig):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def bulk_upsert_new(self, bulk: []):
+    def get_by_filter_paginate(self, data):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def insert_new(self, data):
         raise NotImplementedError
 
