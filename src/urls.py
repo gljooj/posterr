@@ -14,14 +14,14 @@ def hello_world():
 
 @app.route("/profile/<username>", methods=["GET"])
 def profile(username):
-    profile = ProfileController(username=username, page=request.args.get('page', 1))
-    return profile.profile_page()
+    profile_controller = ProfileController(username=username, page=request.args.get('page', 1))
+    return profile_controller.profile_page()
 
 
 @app.route("/home/<username>", methods=["GET"])
 def home(username):
-    profile = HomeController(username=username, page=request.args.get('page', 1))
-    return profile.home_page()
+    home_controller = HomeController(username=username, page=request.args.get('page', 1))
+    return home_controller.home_page()
 
 
 @app.route("/post", methods=["POST"])

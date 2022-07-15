@@ -27,6 +27,6 @@ class PostRepository(AbstractRepository):
         return items
 
     def insert_new(self, post: dict):
-        post.update({"date": datetime.today().strftime('%Y-%m-%d %H:%M:%S')})
+        post.update({"date": datetime.today()})
         insert = self.db['post'].insert_one(post)
         return insert.inserted_id
