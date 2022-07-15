@@ -1,13 +1,12 @@
-import json
 from datetime import datetime
 
 from src.core.repository.post_repository import PostRepository
 from src.core.repository.profile_repository import ProfileRepository
 
 
-class Profile:
+class ProfileController:
 
-    def __init__(self, username, page=1):
+    def __init__(self, username, page):
         self.username = username
         self.page = int(page)
         self.profile_repository = ProfileRepository()
@@ -21,14 +20,15 @@ class Profile:
 
     def __profile_post(self):
         print(self.page)
-        data = self.post_repository.get_by_filter(filter_by={"username": self.username,
-                                                             "page": self.page,
-                                                             "limit": 5})
+        data = self.post_repository.get_by_filter_paginate(filter_by={"query": {"username": self.username},
+                                                                      "page": self.page,
+                                                                      "limit": 5})
         print(data)
         return data
 
     def profile_page(self):
         print(self.page)
         posts = self.__profile_post()
-        return json.dumps({"body": {"profile": self.__profile_data, "posts": posts}},
-                          indent=4, sort_keys=True, default=str)
+        return {"body": {"profile": self.__profile_data,
+                         "posts": posts}
+                }
