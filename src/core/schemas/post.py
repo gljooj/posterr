@@ -1,9 +1,9 @@
 from marshmallow import Schema, fields, validate
 
 
-class Post(Schema):
-    date = fields.DateTime()
-    owner_username = fields.Str()
+class PostSchema(Schema):
+    username = fields.Str(required=True)
+    # Criar regra para repost
     text = fields.Str(validate=validate.Length(max=777))
-    type = fields.Str()
-    username = fields.Str()
+    type = fields.Str(required=True)
+    original_post = fields.Dict()
