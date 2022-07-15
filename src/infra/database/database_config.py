@@ -22,7 +22,8 @@ def create_post(post_collection):
     if post_collection.find_one({"type": "post",
                                  "username": "gabtest", "text": "first"}):
         return print("You have already created first post")
-    return post_collection.insert_one({"type": "post", "username": "gabtest", "text": "first",
+    return post_collection.insert_one({"type": "post", "username": "gabtest", "owern_username": "gabtest",
+                                       "text": "first",
                                        "date": "2022-07-12 15:07:35"})
 
 
