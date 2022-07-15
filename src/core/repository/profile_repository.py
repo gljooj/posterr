@@ -11,5 +11,6 @@ class ProfileRepository(AbstractRepository):
         print(data)
         return data
 
-    def insert_new(self, bulk):
-        pass
+    def insert_new(self, user):
+        insert = self.db['user'].insert_one(user)
+        return insert.inserted_id

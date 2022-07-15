@@ -1,23 +1,32 @@
-from marshmallow import Schema, fields, validate, ValidationError, validates_schema
-
+from marshmallow import Schema, fields, ValidationError, validates_schema
 
 class PostSchema(Schema):
     username = fields.Str(required=True)
-    # Criar regra para repost
-    text = fields.Str(validate=validate.Length(max=777))
     type = fields.Str(required=True)
+    text = fields.String()
     original_post = fields.Dict()
 
     @validates_schema
     def validate_type(self, data,  **kwargs):
+        if 'text' in data:
+            if len(data['text']) > 777:
+                raise ValidationError(
+                    "Text Lengh must be smaller than 777 characters"
+                )
         if data['type'] not in ["post", "repost", "quote-post"]:
             raise ValidationError(
-                'type must be in ["post", "repost", "quote-post"]'
+                "Type must be in [post, repost, quote-post]"
             )
         if data['type'] in ['repost', 'quote-post'] and 'original_post' not in data:
             raise ValidationError(
                 "When [repost, quote-post] inform original_post"
             )
+
+        if data['type'] == 'quote-post' and data['original_post']['type'] == 'quote-post':
+            raise ValidationError(
+                "When quote-posts just can be to [post, repost]"
+            )
+
         if data['type'] == 'repost' and 'text' in data:
             if data not in ['', None]:
                 raise ValidationError(

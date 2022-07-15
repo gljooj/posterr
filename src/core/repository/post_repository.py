@@ -2,7 +2,6 @@ import pymongo
 from datetime import datetime
 
 from src.core.repository.abstract_repository import AbstractRepository
-from src.core.schemas.post import PostSchema
 
 
 class PostRepository(AbstractRepository):
