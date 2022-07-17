@@ -1,0 +1,35 @@
+version: '3.5'
+
+services:
+
+ web:
+  build:
+   context: app
+   dockerfile: Dockerfile
+  command: python -u app.py
+  env_file: development.env
+  ports:
+   - "5000:5000"
+  volumes:
+   - ./app:/app
+
+
+
+ mongodb:
+  image: mongo:latest
+  container_name: "mongodb"
+  command: mongod --auth
+  ports:
+   - 27017:27017
+  volumes:
+   - mongodbdata:/data/db
+
+networks:
+ default:
+  name: web_dev
+
+volumes:
+ appdata:
+  driver: local
+ mongodbdata:
+  driver: local

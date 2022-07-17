@@ -9,7 +9,7 @@ app = Flask("posterr")
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World!</p>"
+    return "<p>Hello, From Posterr!</p>"
 
 
 @app.route("/profile/<username>", methods=["GET"])
@@ -34,3 +34,7 @@ def home(user):
 def post():
     controller = PostController()
     return controller.new_post(request.json)
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")
