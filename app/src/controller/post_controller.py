@@ -26,13 +26,12 @@ class PostController:
             raise Exception("User does not exist")
 
     def validate_post(self, post):
-        # check if users did 5 posts
+        # check if users already did 5 posts
         self.validate_schema(post)
         PostValidate(self.__post_repository, post).validate()
 
     def new_post(self, post):
         try:
-            print("post")
             self.validate_profile(post['username'])
             self.validate_post(post)
             insert = self.__post_repository.insert_new(post)
