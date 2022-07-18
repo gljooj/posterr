@@ -6,27 +6,32 @@ services:
   build:
    context: app
    dockerfile: Dockerfile
-  command: python -u app.py
+  command: bash -c "python -u app.py && python -u data_test_migrate.py"
   env_file: development.env
+  networks:
+   - default
   ports:
    - "5000:5000"
   volumes:
    - ./app:/app
+  depends_on:
+   - db
 
-
-
- mongodb:
+ db:
   image: mongo:latest
-  container_name: "mongodb"
-  command: mongod --auth
-  ports:
-   - 27017:27017
+  hostname: mongodb
+  environment:
+    - MONGO_INITDB_DATABASE=posterr
+    - MONGO_INITDB_ROOT_USERNAME=root
+    - MONGO_INITDB_ROOT_PASSWORD=pass
   volumes:
-   - mongodbdata:/data/db
+    - .:/src/core/infra/database
+  ports:
+    - "27017:27017"
 
 networks:
  default:
-  name: web_dev
+  driver: bridge
 
 volumes:
  appdata:

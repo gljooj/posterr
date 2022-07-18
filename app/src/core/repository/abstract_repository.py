@@ -2,7 +2,7 @@ import abc
 from abc import ABC
 
 
-from src.infra.database.database_config import DataBaseConfig
+from src.core.infra.database.database_config import DataBaseConfig
 
 
 class AbstractRepository(ABC, DataBaseConfig):
@@ -20,4 +20,3 @@ class AbstractRepository(ABC, DataBaseConfig):
     @abc.abstractmethod
     def insert_new(self, data):
         raise NotImplementedError
-

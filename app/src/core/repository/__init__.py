@@ -9,8 +9,11 @@ class PostValidate:
         self.post = post
 
     def validate(self):
-        self.__validate_qtd_user_posts()
-        self.__validate_type_post()
+        try:
+            self.__validate_qtd_user_posts()
+            self.__validate_type_post()
+        except Exception as e:
+            raise f"Validation error: {e}"
 
     def __validate_qtd_user_posts(self):
         start = datetime(datetime.today().year, datetime.today().month, datetime.today().day)

@@ -1,6 +1,6 @@
 from marshmallow import ValidationError
 
-from src.core.schemas.user_schema import UserSchema
+from app.src.core.schemas.user_schema import UserSchema
 
 
 def validate_schema(post):
@@ -12,17 +12,17 @@ def validate_schema(post):
 
 
 def test_order_load_data():
-    test_data = [{"username": "new"},
-                 {"username": "opa09"},
-                 {"username": "newwwwwwwwwwwww"},
-                 {"username": "opa 09"}]
+    test_data = [{"username": "isalpha"},
+                 {"username": "opa0isaplha099"},
+                 {"username": "havemorethanfourtenstring"},
+                 {"username": "is_not_alpha_numeric"}]
 
     # assert expected, on the examples in array each username has the name of test,
     # and the assert_expected is the expected
-    assert_expected = {"new": True,
-                       "opa09": True,
-                       "newwwwwwwwwwwww": False,
-                       "opa 09": False
+    assert_expected = {"isalpha": True,
+                       "opa0isaplha099": True,
+                       "havemorethanfourtenstring": False,
+                       "is_not_alpha_numeric": False
                        }
 
     for post in test_data:

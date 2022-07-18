@@ -1,5 +1,6 @@
 from marshmallow import Schema, fields, ValidationError, validates_schema
 
+
 class PostSchema(Schema):
     username = fields.Str(required=True)
     type = fields.Str(required=True)
@@ -7,12 +8,25 @@ class PostSchema(Schema):
     original_post = fields.Dict()
 
     @validates_schema
-    def validate_type(self, data,  **kwargs):
+    def validate(self, data, **kwargs):
+        self.validate_types(data)
         if 'text' in data:
             if len(data['text']) > 777:
                 raise ValidationError(
                     "Text Lengh must be smaller than 777 characters"
                 )
+
+        if 'original_post' in data:
+            if data['original_post']['type'] == "repost":
+                raise ValidationError(
+                    "You Cannot repost a repost"
+                )
+            try:
+                PostSchema().load(data['original_post'])
+            except ValidationError as err:
+                raise Exception({"original_post_validation": err.messages})
+
+    def validate_types(self, data):
         if data['type'] not in ["post", "repost", "quote-post"]:
             raise ValidationError(
                 "Type must be in [post, repost, quote-post]"
@@ -35,13 +49,3 @@ class PostSchema(Schema):
             raise ValidationError(
                 "When repost you can not text"
             )
-
-        if 'original_post' in data:
-            if data['original_post']['type'] == "repost":
-                raise ValidationError(
-                    "You Cannot repost a repost"
-                )
-            try:
-                PostSchema().load(data['original_post'])
-            except ValidationError as err:
-                raise Exception({"original_post_validation": err.messages})

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from src.core.repository.abstract_repository import AbstractRepository
 
 
@@ -7,10 +9,10 @@ class ProfileRepository(AbstractRepository):
         pass
 
     def get_by_filter(self, username):
-        data = self.db['user'].find_one({"username": username}, {"_id": False})
-        print(data)
+        data = self.db.user.find_one({"username": username}, {"_id": False})
         return data
 
     def insert_new(self, user):
-        insert = self.db['user'].insert_one(user)
+        user['joined_at'] = datetime.now()
+        insert = self.db.user.insert_one(user)
         return insert.inserted_id

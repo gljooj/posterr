@@ -1,13 +1,23 @@
-import os
 from datetime import datetime
 
-from pymongo import MongoClient
+from src.core.infra.database.database_config import DataBaseConfig
 
-client = MongoClient('mongo:27017')
-db = client[os.environ['DATABASE']]
+db = DataBaseConfig.db
 
 
-class CreateTests:
+class CreateTests(DataBaseConfig):
+    def setup(self):
+        print("Creating Data for Tests")
+
+        if not db.user.find_one({"username": "usertest1"}):
+            self.create_user(db.user)
+            self.create_post(db.post)
+            print("Success on Create data for tests")
+            return "Success on Create data for tests"
+
+        print("Data Already Created data for tests")
+        return "Data Already Created data for tests"
+
     @staticmethod
     def create_user(user_collection):
         number = 0
@@ -22,19 +32,10 @@ class CreateTests:
         while number < 3:
             post = post_collection.insert_many([{"type": "post", "username": f"usertest{number}",
                                                  "text": "first",
-                                                 "date": datetime.now()},
+                                                 "created_date": datetime.now()},
                                                 {"type": "post", "username": f"usertest{number}",
                                                  "text": "second",
-                                                 "date": datetime.now()}])
+                                                 "created_date": datetime.now()}])
             number += 1
 
         return post
-
-create = CreateTests()
-print("Creating Data for Tests")
-if not client['user'].find_one({"username": "usertest1"}):
-    create.create_user(client['user'])
-    create.create_post(client['post'])
-
-    print("Success on Create")
-print("Data Already exists")

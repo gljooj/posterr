@@ -12,6 +12,5 @@ class UserSchema(Schema):
             )
         if not data['username'].isalnum():
             raise ValidationError(
-                "Text must bem alphanumeric"
+                "Text must be alphanumeric"
             )
-
