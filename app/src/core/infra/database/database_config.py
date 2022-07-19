@@ -1,5 +1,3 @@
-import os
-
 from pymongo import MongoClient
 
 
@@ -10,5 +8,3 @@ class DataBaseConfig:
                          password='pass',
                          authSource="admin")
     db = client.posterr
-
-# Autenticação mongodb user e password
