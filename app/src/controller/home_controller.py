@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 
+from src.controller import ValidateUser
 from src.core.repository.post_repository import PostRepository
 from src.core.repository.profile_repository import ProfileRepository
 
@@ -15,19 +16,6 @@ class HomeController:
         self.end_at = end_at
         self.__profile_repository = ProfileRepository()
         self.__post_repository = PostRepository()
-
-    def validate_user(self):
-        try:
-            print(self.user)
-            if not self.user:
-                raise "User not informed"
-            self.user = json.loads(self.user)
-
-            data = self.__profile_repository.get_by_filter(username=self.user['username'])
-            if not data:
-                raise Exception("User does not exist")
-        except Exception as e:
-            raise Exception(f"Validation error: {str(e)}")
 
     def define_query(self):
         if self.post_from not in ['all', 'only-mine']:
@@ -57,21 +45,18 @@ class HomeController:
         return data
 
     def __posts(self):
-        print("ooooooooi")
         query = self.define_query()
         date = self.define_date_query()
         if date:
             query.update(date)
 
-        print("tchaaaaaaaau")
         data = self.__post_repository.get_by_filter_paginate(filter_by={"query": query, "page": self.page,
                                                                         "limit": 10})
-        print(data)
         return data
 
     def home_page(self):
         try:
-            self.validate_user()
+            self.user = ValidateUser(self.user)
             posts = self.__posts()
             return {"body": {"profile": self.__profile_data,
                              "posts": posts}
