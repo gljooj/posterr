@@ -23,7 +23,7 @@ class CreateTests(DataBaseConfig):
         number = 0
         while number < 3:
             user_collection.insert_one({"username": f"usertest{number}",
-                                        "joined_at": datetime(2022, 7, 17, 4+number, 55, 5)})
+                                        "joined_at": datetime(2022, 7, 17, 4 + number, 55, 5)})
             number += 1
 
     @staticmethod
@@ -36,7 +36,7 @@ class CreateTests(DataBaseConfig):
                                                  "created_date": datetime.now()},
                                                 {"type": "post", "username": f"usertest{number}",
                                                  "text": "second",
-                                                 "created_date": datetime(2022, 7, 18, 4+number, 55, 5)}])
+                                                 "created_date": datetime(2022, 7, 18, 4 + number, 55, 5)}])
             number += 1
 
         return post
