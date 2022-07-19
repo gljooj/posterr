@@ -1,4 +1,8 @@
+import json
+
 from marshmallow import Schema, fields, ValidationError, validates_schema
+
+from src.controller import ValidateUser
 
 
 class PostSchema(Schema):
@@ -17,6 +21,8 @@ class PostSchema(Schema):
                 )
 
         if 'original_post' in data:
+            user_original_post = json.dumps({"username": data['original_post']['username']})
+            ValidateUser(user=user_original_post)
             if data['original_post']['type'] == "repost":
                 raise ValidationError(
                     "You Cannot repost a repost"
@@ -40,9 +46,13 @@ class PostSchema(Schema):
             raise ValidationError(
                 "When quote-posts just can be to [post, repost]"
             )
+        if data['type'] == 'post' and 'original_post' in data:
+            raise ValidationError(
+                "Posts must be new"
+            )
 
         if data['type'] == 'repost' and 'text' in data:
-            if data not in ['', None]:
+            if data['text'] not in ['', None]:
                 raise ValidationError(
                     "When repost you can not text"
                 )
