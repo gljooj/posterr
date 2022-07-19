@@ -6,7 +6,9 @@ services:
   build:
    context: app
    dockerfile: Dockerfile
-  command: bash -c "python -u app.py && python -u data_test_migrate.py"
+  depends_on:
+   - db
+  command: bash -c "python -u data_test_migrate.py && python -u app.py"
   env_file: development.env
   networks:
    - default
@@ -14,8 +16,6 @@ services:
    - "5000:5000"
   volumes:
    - ./app:/app
-  depends_on:
-   - db
 
  db:
   image: mongo:latest

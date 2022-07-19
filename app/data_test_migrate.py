@@ -40,3 +40,6 @@ class CreateTests(DataBaseConfig):
             number += 1
 
         return post
+
+
+print(CreateTests().setup())
