@@ -36,7 +36,7 @@ class PostValidate:
                 raise Exception(f"User {self.post['username']} Trying to repost a repost")
 
 
-class ValidateUser:
+class ProfileValidate:
 
     def __init__(self, user):
         self.__profile_repository = ProfileRepository()
@@ -51,7 +51,7 @@ class ValidateUser:
             data = self.__profile_repository.get_by_filter(username=self.user['username'])
             if not data:
                 raise Exception("User does not exist")
-            self.username = self.user['username']
+            self.username = self.user["username"]
             return self.user
         except Exception as e:
             raise Exception(f"Validation error: {str(e)}")
