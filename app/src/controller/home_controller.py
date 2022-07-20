@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from src.controller import ValidateUser
+from src.controller import ProfileValidate
 from src.core.repository.post_repository import PostRepository
 from src.core.repository.profile_repository import ProfileRepository
 
@@ -55,7 +55,7 @@ class HomeController:
 
     def home_page(self):
         try:
-            self.user = ValidateUser(self.user)
+            self.user = ProfileValidate(self.user).validate_user()
             posts = self.__posts()
             return {"body": {"profile": self.__profile_data,
                              "posts": posts}
