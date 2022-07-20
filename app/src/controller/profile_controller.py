@@ -2,7 +2,7 @@ from datetime import datetime
 
 from marshmallow import ValidationError, pprint
 
-from src.controller import ValidateUser
+from src.controller import ProfileValidate
 from src.core.repository.post_repository import PostRepository
 from src.core.repository.profile_repository import ProfileRepository
 from src.core.schemas.user_schema import UserSchema
@@ -52,7 +52,7 @@ class ProfileController:
 
     def profile_page(self):
         try:
-            self.user = ValidateUser(self.user)
+            self.user = ProfileValidate(self.user).validate_user()
             user = self.__profile_data
             posts = self.__profile_posts()
             total_posts = self.__total_posts()
