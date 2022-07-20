@@ -2,7 +2,7 @@ import json
 
 from marshmallow import Schema, fields, ValidationError, validates_schema
 
-from src.controller import ValidateUser
+from src.controller import ProfileValidate
 
 
 class PostSchema(Schema):
@@ -22,7 +22,7 @@ class PostSchema(Schema):
 
         if 'original_post' in data:
             user_original_post = json.dumps({"username": data['original_post']['username']})
-            ValidateUser(user=user_original_post)
+            ProfileValidate(user=user_original_post).validate_user()
             if data['original_post']['type'] == "repost":
                 raise ValidationError(
                     "You Cannot repost a repost"
