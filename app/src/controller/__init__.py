@@ -50,7 +50,7 @@ class ProfileValidate:
             self.user = json.loads(self.user)
             data = self.__profile_repository.get_by_filter(username=self.user['username'])
             if not data:
-                raise Exception("User does not exist")
+                raise Exception(f"User {self.user['username']} does not exist")
             self.username = self.user["username"]
             return self.user
         except Exception as e:

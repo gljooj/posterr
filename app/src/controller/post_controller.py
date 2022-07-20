@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from marshmallow import ValidationError
 
 from src.controller import PostValidate, ProfileValidate
@@ -21,7 +19,6 @@ class PostController:
         try:
             PostSchema().load(post)
         except ValidationError as err:
-            pprint(err.messages)
             raise Exception(err.messages)
 
     def validate_user(self):
@@ -30,7 +27,8 @@ class PostController:
     def validate_post(self, post):
         # check if users already did 5 posts
         self.validate_schema(post)
-        PostValidate(self.__post_repository, post, self.username).validate()
+        post_validate = PostValidate(self.__post_repository, post, self.username)
+        post_validate.validate()
 
     def new_post(self, post):
         try:

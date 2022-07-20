@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from marshmallow import ValidationError, pprint
+from marshmallow import ValidationError
 
 from src.controller import ProfileValidate
 from src.core.repository.post_repository import PostRepository
@@ -21,7 +21,6 @@ class ProfileController:
         try:
             UserSchema().load(post)
         except ValidationError as err:
-            pprint(err.messages)
             raise Exception(err.messages)
 
     @property
@@ -57,8 +56,8 @@ class ProfileController:
             posts = self.__profile_posts()
             total_posts = self.__total_posts()
             return {"body": {"profile": user,
-                             "total_posts": total_posts,
-                             "posts": posts}
+                             "posts": posts,
+                             "total_posts": total_posts}
                     }
         except Exception as e:
             return {"body": {"error": str(e)}}, 500
