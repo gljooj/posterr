@@ -12,7 +12,7 @@ class TestPostController:
 
         post = controller.new_post({"type": "post", "text": "test_success"})
         assert post['body']['message']
-        self.__db.user.delete_many({'text': 'test_success'})
+        self.__db.post.delete_many({"text": "test_success"})
 
     def test_repost_new_post_test_ok(self):
         controller = PostController(user='{"username": "usertest1"}')
@@ -22,7 +22,7 @@ class TestPostController:
                                                       "text": "test_repost_new_post_test_ok"}})
 
         assert post['body']['message']
-        self.__db.user.delete_many({'text': 'test_repost_new_post_test_ok'})
+        self.__db.post.delete_many({"text": "test_repost_new_post_test_ok"})
 
     def test_quote_post_test_ok(self):
         controller = PostController(user='{"username": "usertest1"}')
@@ -31,7 +31,7 @@ class TestPostController:
                                     "original_post": {"username": "usertest1", "type": "post", "text": "first"}
                                     })
         assert post['body']['message']
-        self.__db.user.delete_many({'text': 'test_quote_post_test_ok'})
+        self.__db.post.delete_many({"text": "test_quote_post_test_ok"})
 
     def test_repost_quote_post_test_ok(self):
         controller = PostController(user='{"username": "usertest1"}')
@@ -44,7 +44,7 @@ class TestPostController:
                                                       }
                                     })
         assert post['body']['message']
-        self.__db.user.delete_many({'text': 'test_repost_quote_post_test_ok'})
+        self.__db.post.delete_many({"text": "test_repost_quote_post_test_ok"})
 
     def test_quote_post_to_repost_test_ok(self):
         controller = PostController(user='{"username": "usertest1"}')
@@ -56,7 +56,7 @@ class TestPostController:
                                }
              })
         assert post['body']['message']
-        self.__db.user.delete_many({'text': 'test_quote_post_to_repost_test_ok'})
+        self.__db.post.delete_many({"text": "test_quote_post_to_repost_test_ok"})
 
     def test_post_test_big_string_nok(self):
         controller = PostController(user='{"username": "usertest1"}')
@@ -98,4 +98,3 @@ class TestPostController:
         post = controller.new_post({"post_none": "not_field_exist"})
         assert post[0]['body']['error']
         assert post[1] == 400
-

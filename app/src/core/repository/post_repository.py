@@ -29,7 +29,6 @@ class PostRepository(AbstractRepository):
         for item in data:
             items["data"].append(item)
         items.update({"count": len(items["data"])})
-        print(items)
         return items
 
     def insert_new(self, post: dict):

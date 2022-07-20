@@ -11,7 +11,6 @@ class TestProfileController:
     def test_new_user_error(self):
         profile_controller = ProfileController(user=None)
         new_user = profile_controller.new_user({"a": "test"})
-        print(new_user)
         assert new_user[0]['body']['error']
         assert new_user[1] == 400
 
@@ -20,7 +19,7 @@ class TestProfileController:
         profile_page = profile_controller.profile_page()
         assert profile_page['body']['profile']['username'] == profile_controller.user['username']
         assert profile_page['body']['posts']
-        assert profile_page['body']['total_posts']
+        assert len(profile_page['body']['posts']) == 5
 
     def test_profile_page_failed(self):
         profile_controller = ProfileController(user='{"uasername": "usertest1"}')

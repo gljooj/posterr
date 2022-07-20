@@ -48,14 +48,13 @@ class TestHomeController:
         controller = HomeController(user='{"username": "usertest1"}', page=1,
                                     post_from='only-mine', start_at=None, end_at=None)
         home_page = controller.home_page()
-        print(home_page)
         assert home_page['body']['profile']
         assert home_page['body']['posts']
+        assert len(home_page['body']['posts']) == 10
 
     def test_home_page_failed(self):
         controller = HomeController(user='{"a": "usertest1"}', page=1,
                                     post_from='only-mine', start_at=None, end_at=None)
         home_page = controller.home_page()
-        print(home_page)
         assert home_page[0]['body']['error']
         assert home_page[1] == 500
