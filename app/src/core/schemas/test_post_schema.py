@@ -1,5 +1,6 @@
 from marshmallow import ValidationError
 
+from src.core.infra.database.database_config import DataBaseConfig
 from src.core.schemas.post_schema import PostSchema
 
 
@@ -11,7 +12,16 @@ def validate_schema(post):
         return False
 
 
+__db = DataBaseConfig()
+
+
 def test_order_load_data():
+    users = [{"username": "post_test_ok", "temporary": True},
+             {"username": "repost_test_ok", "temporary": True},
+             {"username": "repost_quote_post_test_ok", "temporary": True},
+             {"username": "quote_post_test_ok", "temporary": True},
+             {"username": "quote_post_to_repost_test_ok", "temporary": True}]
+    __db.db.user.insert_many(users)
     test_data = [{"username": "post_test_ok", "type": "post", "text": "first"},
 
                  {"username": "repost_test_ok", "type": "repost",
@@ -19,7 +29,9 @@ def test_order_load_data():
                   },
 
                  {"username": "repost_quote_post_test_ok", "type": "repost",
-                  "original_post": {"username": "post_test_ok", "type": "post", "text": "first"}
+                  "original_post": {"username": "quote_post_test_ok", "type": "quote-post", "text": "testing text",
+                                    "original_post": {"username": "post_test_ok", "type": "post", "text": "first"}
+                                    }
                   },
 
                  {"username": "quote_post_test_ok", "type": "quote-post", "text": "testing text",
@@ -27,7 +39,9 @@ def test_order_load_data():
                   },
 
                  {"username": "quote_post_to_repost_test_ok", "type": "quote-post", "text": "testing text",
-                  "original_post": {"username": "post_test_ok", "type": "post", "text": "first"}
+                  "original_post": {"username": "repost_test_ok", "type": "repost",
+                                    "original_post": {"username": "post_test_ok", "type": "post", "text": "first"}
+                                    }
                   },
 
                  {"username": "post_test_big_string", "type": "post", "text": 'a' * 778},
@@ -45,8 +59,8 @@ def test_order_load_data():
                  {"username": "not_field_exist", "post_none": "not_field_exist"}
                  ]
 
-    # assert expected, on the examples in array each username has the name of test,
-    # and the assert_expected is the expected
+    """assert expected, on the examples in array each username has the name of test,
+    and the assert_expected is the expected"""
     assert_expected = {"post_test_ok": True,
                        "repost_test_ok": True,
                        "repost_quote_post_test_ok": True,
@@ -62,3 +76,6 @@ def test_order_load_data():
 
     for post in test_data:
         assert assert_expected[post.get('username')] == validate_schema(post)
+
+    delete_temporary = __db.db.user.delete_many({"temporary": True})
+    print(delete_temporary.deleted_count, " documents deleted !!")

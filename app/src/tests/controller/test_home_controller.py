@@ -4,7 +4,7 @@ from src.controller.home_controller import HomeController
 
 
 class TestHomeController:
-    controller_success = HomeController(user='{"username": "test"}', page=1,
+    controller_success = HomeController(user='{"username": "test_home"}', page=1,
                                         post_from='only-mine', start_at=None, end_at=None)
 
     def test_define_query_success(self):
@@ -43,3 +43,19 @@ class TestHomeController:
         controller_date.start_at = None
         controller_date.end_at = None
         assert controller_date.define_date_query() is None
+
+    def test_home_page_success(self):
+        controller = HomeController(user='{"username": "usertest1"}', page=1,
+                                    post_from='only-mine', start_at=None, end_at=None)
+        home_page = controller.home_page()
+        print(home_page)
+        assert home_page['body']['profile']
+        assert home_page['body']['posts']
+
+    def test_home_page_failed(self):
+        controller = HomeController(user='{"a": "usertest1"}', page=1,
+                                    post_from='only-mine', start_at=None, end_at=None)
+        home_page = controller.home_page()
+        print(home_page)
+        assert home_page[0]['body']['error']
+        assert home_page[1] == 500
