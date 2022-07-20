@@ -2,7 +2,6 @@ import os
 
 from pymongo import MongoClient
 
-print(os.environ)
 
 class DataBaseConfig:
     client = MongoClient(host=os.environ['DATABASE'],
