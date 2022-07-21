@@ -1,23 +1,25 @@
+import json
 from datetime import datetime
 
 from src.controller.home_controller import HomeController
+from src.core.schema import UserObject
 
 
 class TestHomeController:
-    controller_success = HomeController(user='{"username": "test_home"}', page=1,
+    controller_success = HomeController(user=UserObject(username='test_home', joined_at=datetime.now()), page=1,
                                         post_from='only-mine', start_at=None, end_at=None)
 
-    def test_define_query_success(self):
-        assert self.controller_success.define_query() == self.controller_success.user
+    def test_define_filter_success(self):
+        assert self.controller_success.define_filter().get("username") == self.controller_success.user.username
         alternate_controller = self.controller_success
         alternate_controller.post_from = "all"
-        assert alternate_controller.define_query() == {}
+        assert alternate_controller.define_filter() == {}
 
     def test_define_query_error(self):
         alternate_controller = self.controller_success
         alternate_controller.post_from = "not_exist"
         try:
-            self.controller_success.define_query()
+            self.controller_success.define_filter()
         except Exception as e:
             assert e.args[0] == 'Filter must be all or only-mine'
 
