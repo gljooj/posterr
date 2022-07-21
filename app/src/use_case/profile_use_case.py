@@ -19,8 +19,7 @@ class ProfileUseCase:
             raise Exception(err.messages)
 
     def validate_user(self, user):
-        a = ProfileValidate(user=user, repository=self.__profile_repository).validate_user()
-        return a
+        return ProfileValidate(user=user, repository=self.__profile_repository).validate_user()
 
     def profile_data(self, username):
         data = self.__profile_repository.get_by_filter(username=username)
@@ -30,11 +29,9 @@ class ProfileUseCase:
     def insert_new(self, user):
         try:
             self.validate_schema(user)
-
             if self.__profile_repository.get_by_filter(username=user['username']):
                 raise Exception(f"User '{user['username']}' already exists.")
-
             insert = self.__profile_repository.insert_new(user)
             return insert
         except Exception as e:
-            raise Exception("Error to insert new")
+            raise Exception(f"Error to insert new. ERROR:{e}")

@@ -8,7 +8,7 @@ class UserSchema(Schema):
     def validate_type(self, data, **kwargs):
         if len(data['username']) > 14:
             raise ValidationError(
-                "Text Lengh must be smaller than 777 characters"
+                "Username Lenght must be smaller than 14 characters"
             )
         if not data['username'].isalnum():
             raise ValidationError(

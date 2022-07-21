@@ -23,7 +23,12 @@ class PostRepository(AbstractRepository):
             raise e
 
     def get_by_filter(self, filter_by):
-        data = self.db.post.find(filter_by["query"], {"_id": False})
+
+        if 'limit' in filter_by:
+            data = self.db.post.find(filter_by["query"], {"_id": False}).limit(filter_by['limit'])
+        else:
+            data = self.db.post.find(filter_by["query"], {"_id": False})
+
         items = {"data": []}
         for item in data:
             items["data"].append(item)

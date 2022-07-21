@@ -9,9 +9,11 @@ class ProfileRepository(AbstractRepository):
     def get_by_filter_paginate(self, data):
         pass
 
-    def get_by_filter(self, username) -> UserObject:
+    def get_by_filter(self, username) -> UserObject or None:
         data = self.db.user.find_one({"username": username}, {"_id": False})
-        return UserObject(username=username, joined_at=data['joined_at'])
+        if data:
+            return UserObject(username=username, joined_at=data['joined_at'])
+        return None
 
     def insert_new(self, user):
         user['joined_at'] = datetime.now()
