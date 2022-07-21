@@ -1,7 +1,7 @@
 from marshmallow import ValidationError
 
 from src.core.infra.database.database_config import DataBaseConfig
-from src.core.schemas.post_schema import PostSchema
+from src.core.schema.post_schema import PostSchema
 
 
 def validate_schema(post):

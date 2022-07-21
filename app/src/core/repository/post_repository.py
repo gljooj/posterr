@@ -10,8 +10,7 @@ class PostRepository(AbstractRepository):
         try:
             # page - 1 to start from last data
             limit = filter_by["limit"]
-            skip = (filter_by['page'] - 1) * limit
-
+            skip = (filter_by["page"] - 1) * limit
             data = self.db.post.find(
                 filter_by["query"], {"_id": False}).sort('created_date', pymongo.DESCENDING).\
                 skip(skip).limit(filter_by["limit"])

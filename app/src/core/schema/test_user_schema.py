@@ -1,6 +1,6 @@
 from marshmallow import ValidationError
 
-from app.src.core.schemas.user_schema import UserSchema
+from app.src.core.schema.user_schema import UserSchema
 
 
 def validate_schema(post):

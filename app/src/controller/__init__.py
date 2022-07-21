@@ -3,6 +3,7 @@ from datetime import datetime
 
 from src.core.repository.post_repository import PostRepository
 from src.core.repository.profile_repository import ProfileRepository
+from src.core.schema import UserObject
 
 
 class PostValidate:
@@ -38,8 +39,8 @@ class PostValidate:
 
 class ProfileValidate:
 
-    def __init__(self, user):
-        self.__profile_repository = ProfileRepository()
+    def __init__(self, user, repository: ProfileRepository):
+        self.__profile_repository = repository
         self.user = user
         self.username = None
 
@@ -51,7 +52,6 @@ class ProfileValidate:
             data = self.__profile_repository.get_by_filter(username=self.user['username'])
             if not data:
                 raise Exception(f"User {self.user['username']} does not exist")
-            self.username = self.user["username"]
-            return self.user
+            return data
         except Exception as e:
             raise Exception(f"Validation error: {str(e)}")

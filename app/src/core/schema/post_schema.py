@@ -3,6 +3,7 @@ import json
 from marshmallow import Schema, fields, ValidationError, validates_schema
 
 from src.controller import ProfileValidate
+from src.core.repository.profile_repository import ProfileRepository
 
 
 class PostSchema(Schema):
@@ -27,7 +28,7 @@ class PostSchema(Schema):
     def validate_original_post(data):
         user_original_post = json.dumps({"username": data['original_post']['username']})
 
-        ProfileValidate(user=user_original_post).validate_user()
+        ProfileValidate(user=user_original_post, repository=ProfileRepository()).validate_user()
 
         if data['original_post']['type'] == data['type']:
             msg = "When quote-posts just can be to [post, repost]" \
@@ -43,7 +44,7 @@ class PostSchema(Schema):
                     {"username": data['original_post']['original_post']['username']}
                 )
 
-                ProfileValidate(user=user_original_original_post).validate_user()
+                ProfileValidate(user=user_original_original_post, repository=ProfileRepository()).validate_user()
                 try:
                     PostSchema().load(data['original_post']['original_post'])
                 except ValidationError as err:
