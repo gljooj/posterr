@@ -41,8 +41,8 @@ class PostUseCase:
             user = self.profile_use_case.validate_user(user)
             post["username"] = user.username
 
+            self.validate_schema(post)
             self.validate_post(post, user.username)
-
             insert = self.__post_repository.insert_new(post)
             return {"body": {"message": "Post Created",
                              "post_id": str(insert)

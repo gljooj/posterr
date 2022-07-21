@@ -1,9 +1,14 @@
+import json
+from datetime import datetime
+
 from src.controller.profile_controller import ProfileController
 from src.core.infra.database.database_config import DataBaseConfig
 
 
 class TestProfileController:
     def test_new_user(self):
+        __db = DataBaseConfig()
+        __db.db.user.delete_one({"username": "test"})
         profile_controller = ProfileController(user=None)
         new_user = profile_controller.new_user({"username": "test"})
         assert new_user['body']['message']
@@ -15,9 +20,10 @@ class TestProfileController:
         assert new_user[1] == 400
 
     def test_profile_page_success(self):
-        profile_controller = ProfileController(user='{"username": "usertest1"}')
+        user_dump = json.dumps({"username": "usertest1"})
+        profile_controller = ProfileController(user=user_dump)
         profile_page = profile_controller.profile_page()
-        assert profile_page['body']['profile']['username'] == profile_controller.user['username']
+        assert profile_page['body']['profile']['username'] == profile_controller.user.username
         assert profile_page['body']['posts']
         assert len(profile_page['body']['posts']) == 5
 
@@ -27,6 +33,7 @@ class TestProfileController:
         assert profile_page[0]['body']['error']
         assert profile_page[1] == 500
 
-
-__db = DataBaseConfig()
-__db.db.user.delete_one({"username": "test"})
+    @staticmethod
+    def finished():
+        __db = DataBaseConfig()
+        __db.db.user.delete_one({"username": "test"})

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from marshmallow import ValidationError
 
 from src.core.infra.database.database_config import DataBaseConfig
@@ -16,11 +18,14 @@ __db = DataBaseConfig()
 
 
 def test_order_load_data():
-    users = [{"username": "post_test_ok", "temporary": True},
-             {"username": "repost_test_ok", "temporary": True},
-             {"username": "repost_quote_post_test_ok", "temporary": True},
-             {"username": "quote_post_test_ok", "temporary": True},
-             {"username": "quote_post_to_repost_test_ok", "temporary": True}]
+    __db.db.user.delete_many({"temporary": True})
+
+    users = [{"username": "post_test_ok", "temporary": True, "joined_at": datetime(2022, 7, 17, 4, 55, 5)},
+             {"username": "repost_test_ok", "temporary": True, "joined_at": datetime(2022, 7, 17, 4, 55, 5)},
+             {"username": "repost_quote_post_test_ok", "temporary": True, "joined_at": datetime(2022, 7, 17, 4, 55, 5)},
+             {"username": "quote_post_test_ok", "temporary": True, "joined_at": datetime(2022, 7, 17, 4, 55, 5)},
+             {"username": "quote_post_to_repost_test_ok",
+              "temporary": True, "joined_at": datetime(2022, 7, 17, 4, 55, 5)}]
     __db.db.user.insert_many(users)
     test_data = [{"username": "post_test_ok", "type": "post", "text": "first"},
 
