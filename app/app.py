@@ -45,8 +45,8 @@ def home():
 @app.route("/profile/post", methods=["POST"])
 @app.route("/post", methods=["POST"])
 def post():
-    controller = PostController(request.headers.get('user'))
-    return controller.new_post(request.json)
+    controller = PostController()
+    return controller.new_post(request.json, user=request.headers.get('user'))
 
 
 if __name__ == "__main__":
