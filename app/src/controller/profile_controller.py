@@ -6,7 +6,7 @@ from src.use_case.profile_use_case import ProfileUseCase
 
 class ProfileController:
 
-    def __init__(self, user, page):
+    def __init__(self, user, page=1):
         self.user = user
         self.page = int(page)
         self.__profile_repository = ProfileRepository()

@@ -33,7 +33,7 @@ def profile():
 
 @app.route("/home", methods=["GET"])
 def home():
-    home_controller = HomeController(user=request.headers.get('user'),
+    home_controller = HomeController(user=request.headers.get('user', None),
                                      page=request.args.get('page', 1),
                                      post_from=request.args.get('post_from', 'all'),
                                      start_at=request.args.get('start_at', None),

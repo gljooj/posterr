@@ -46,7 +46,7 @@ class ProfileValidate:
     def validate_user(self):
         try:
             if not self.user:
-                raise "User not informed"
+                raise Exception("User not informed")
             self.user = json.loads(self.user)
             data = self.__profile_repository.get_by_filter(username=self.user['username'])
             if not data:
