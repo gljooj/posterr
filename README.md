@@ -16,9 +16,10 @@ My name is Gabriel, So I'll explain how I thought to build this project:
 
 ```
 After create Database Modeling.
-        Now it's time to decide the architecture. I think this is one of the hard choices to do, because this decision will
-    reflect also the performance, easy understanding and scalability of the project. 
-    So I decided use concepts of Clean Architecture
+        Now it's time to decide the architecture. This is one of the hard choices to do, because this decision will
+    reflect also the performance, understanding and scalability of the project. 
+    Then to serve these requirements, I decided use concepts of Clean Architecture, as the project is not something with big rules and 
+    implementations and fits the needs.
 ```
 
 
