@@ -1,0 +1,358 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Posterr",
+		"_postman_id": "7869637d-f14f-b40c-2aaf-0e8a69dbc614",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Profile",
+			"description": "",
+			"item": [
+				{
+					"name": "Create Profile",
+					"request": {
+						"url": "http://localhost:5000/profile",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"username\": \"newuser\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Profile",
+					"request": {
+						"url": {
+							"raw": "http://localhost:5000/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"profile"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2",
+									"equals": true,
+									"description": "",
+									"disabled": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "user",
+								"value": "{\"username\": \"usertest1\"}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Creat Post from Profile",
+					"request": {
+						"url": "http://localhost:5000/profile/post",
+						"method": "POST",
+						"header": [
+							{
+								"key": "user",
+								"value": "{\"username\": \"usertest1\"}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"type\": \"post\",  \"text\": \"eight\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Home",
+			"description": "",
+			"item": [
+				{
+					"name": "Home",
+					"request": {
+						"url": {
+							"raw": "http://localhost:5000/home",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"home"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2",
+									"equals": true,
+									"description": "",
+									"disabled": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "user",
+								"value": "{\"username\": \"usertest1\"}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Home Only-mine",
+					"request": {
+						"url": {
+							"raw": "http://localhost:5000/home?post_from=only-mine",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"home"
+							],
+							"query": [
+								{
+									"key": "post_from",
+									"value": "only-mine",
+									"equals": true,
+									"description": "only-mine or all"
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"equals": true,
+									"description": "",
+									"disabled": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "user",
+								"value": "{\"username\": \"usertest1\"}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Home with date range",
+					"request": {
+						"url": {
+							"raw": "http://localhost:5000/home?start_at=2022-07-18 08:55:00&end_at=2022-07-21 08:55:00",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"home"
+							],
+							"query": [
+								{
+									"key": "start_at",
+									"value": "2022-07-18 08:55:00",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "end_at",
+									"value": "2022-07-21 08:55:00",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "post_from",
+									"value": "only-mine",
+									"equals": true,
+									"description": "",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"equals": true,
+									"description": "",
+									"disabled": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "user",
+								"value": "{\"username\": \"usertest1\"}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Creat Post from Home",
+					"request": {
+						"url": "http://localhost:5000/home/post",
+						"method": "POST",
+						"header": [
+							{
+								"key": "user",
+								"value": "{\"username\": \"usertest1\"}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"type\": \"post\",  \"text\": \"eight\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post options",
+			"description": "",
+			"item": [
+				{
+					"name": "Create Post",
+					"request": {
+						"url": "http://localhost:5000/post",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							},
+							{
+								"key": "user",
+								"value": "{\"username\": \"usertest1\"}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"type\": \"post\", \"text\": \"eight\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Creat repost",
+					"request": {
+						"url": "http://localhost:5000/home/post",
+						"method": "POST",
+						"header": [
+							{
+								"key": "user",
+								"value": "{\"username\": \"usertest1\"}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"type\": \"repost\", \"original_post\": {\"username\": \"usertest1\", \"type\": \"post\", \"text\": \"Post by home\" }}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Creat quote-post",
+					"request": {
+						"url": "http://localhost:5000/home/post",
+						"method": "POST",
+						"header": [
+							{
+								"key": "user",
+								"value": "{\"username\": \"usertest1\"}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"type\": \"quote-post\", \"original_post\": {\"username\": \"usertest1\", \"type\": \"post\", \"text\": \"Post by home\" }}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Setup Database",
+			"request": {
+				"url": "localhost:5000/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
