@@ -14,7 +14,7 @@ down:
 	docker-compose down
 
 test:
-	docker exec -it posterr_web_1 pytest
+	docker exec -it posterr_web pytest
 
 lint_check:
 	flake8
