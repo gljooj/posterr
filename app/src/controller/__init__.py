@@ -3,7 +3,6 @@ from datetime import datetime
 
 from src.core.repository.post_repository import PostRepository
 from src.core.repository.profile_repository import ProfileRepository
-from src.core.schema import UserObject
 
 
 class PostValidate:
@@ -17,23 +16,23 @@ class PostValidate:
             self.__validate_qtd_user_posts()
             self.__validate_type_post()
         except Exception as e:
-            raise f"Validation error: {e}"
+            raise Exception(e)
 
     def __validate_qtd_user_posts(self):
         try:
             start = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
             find = self.repository.get_by_filter(filter_by={"query": {"username": self.username,
-                                                                      "date": {"$gte": start}
+                                                                      "created_date": {"$gte": start}
                                                                       },
                                                             "limit": 5})
-            if len(find) >= 5:
+            if find['count'] >= 5:
                 raise Exception(f"User {self.post['username']} exceeded limit of 5 posts a day")
         except Exception as e:
-            raise Exception(f"Validation error {str(e)}")
+            raise Exception(e)
 
     def __validate_type_post(self):
-        if self.post['type'] == "repost":
-            if self.post['original_post']['type'] == "repost":
+        if self.post["type"] == "repost":
+            if self.post["original_post"]["type"] == "repost":
                 raise Exception(f"User {self.post['username']} Trying to repost a repost")
 
 

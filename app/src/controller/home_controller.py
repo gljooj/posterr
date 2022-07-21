@@ -31,7 +31,7 @@ class HomeController:
                                          "$gte": datetime.strptime(self.start_at, '%Y-%m-%d %H:%M:%S')}}
 
         if self.start_at:
-            query = {"created_date": {"$gte": datetime.strptime(self.start_at, '%Y-%m-%d %H:%M:%S')}}
+            query = {"created_date": {"$gte": datetime.fromisoformat(self.start_at)}}
 
         return query
 
@@ -48,7 +48,7 @@ class HomeController:
             self.user = self.profile_use_case.validate_user(self.user)
             posts = self.__posts()
             profile = self.profile_use_case.profile_data(self.user.username)
-            return {"body": {"profile": profile,
+            return {"body": {"profile": dict(profile),
                              "posts": posts}
                     }
         except Exception as e:

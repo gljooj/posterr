@@ -6,7 +6,7 @@ from src.use_case.profile_use_case import ProfileUseCase
 
 class ProfileController:
 
-    def __init__(self, user, page=1):
+    def __init__(self, user, page):
         self.user = user
         self.page = int(page)
         self.__profile_repository = ProfileRepository()
@@ -26,10 +26,10 @@ class ProfileController:
             self.user = self.use_case.validate_user(user=self.user)
 
             user_profile_data = self.use_case.profile_data(username=self.user.username)
-            posts = self.post_use_case.profile_posts(username=self.user.username)
+            posts = self.post_use_case.profile_posts(username=self.user.username, page=self.page)
             total_posts = self.post_use_case.total_posts(username=self.user.username)
 
-            return {"body": {"profile": user_profile_data,
+            return {"body": {"profile": dict(user_profile_data),
                              "posts": posts,
                              "total_posts": total_posts}
                     }
