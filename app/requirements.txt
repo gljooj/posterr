@@ -5,3 +5,4 @@ Flask~=2.1.2
 setuptools~=58.1.0
 coverage==6.4.2
 python-dotenv~=0.20.0
+flake8~=4.0.1

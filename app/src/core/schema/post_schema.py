@@ -50,7 +50,6 @@ class PostSchema(Schema):
                 except ValidationError as err:
                     raise Exception({"original_post_validation": err.messages})
 
-
         try:
             PostSchema().load(data["original_post"])
         except ValidationError as err:

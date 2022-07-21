@@ -1,6 +1,4 @@
 import json
-from datetime import datetime
-
 from src.controller.profile_controller import ProfileController
 from src.core.infra.database.database_config import DataBaseConfig
 
