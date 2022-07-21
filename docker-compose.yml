@@ -6,6 +6,7 @@ services:
   build:
    context: app
    dockerfile: Dockerfile
+  container_name: posterr_web
   depends_on:
    - db
   command: bash -c "python -u data_test_migrate.py && python -u app.py"
@@ -35,6 +36,4 @@ networks:
 
 volumes:
  appdata:
-  driver: local
- mongodbdata:
   driver: local
