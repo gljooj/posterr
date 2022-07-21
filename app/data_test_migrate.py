@@ -23,7 +23,7 @@ class CreateTests(DataBaseConfig):
             user_collection.insert_one({"username": f"usertest{number}",
                                         "joined_at": datetime(2022, 7, 17, 4 + number, 55, 5)})
             self.create_post(f"usertest{number}")
-            print(number)
+
             number = number + 1
 
     def create_post(self, user):
