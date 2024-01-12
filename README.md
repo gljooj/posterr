@@ -1,6 +1,6 @@
 # Posterr
 
-Mad with Flask, MongoDB and Docker. Dockerfile is also available to make docker image and docker containers.
+Made with Flask, MongoDB and Docker. Dockerfile is also available to make docker image and docker containers.
 
 # Project Description
 
